@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
+  xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions"
+  xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions" targetNamespace="http://www.ibm.com/dfdl/edi/un/edifact/SupplyChain/D03B"
+  xmlns:tns="http://www.ibm.com/dfdl/edi/un/edifact/SupplyChain/D03B">
+
+
+  <!-- Variables used to store delimiter values from the UNA. -->
+  <xsd:annotation>
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:defineVariable defaultValue="'%WSP*; %NL;%WSP*;"
+        name="SegmentTerm" type="xsd:string" />
+      <dfdl:defineVariable defaultValue="+" name="FieldSep"
+        type="xsd:string" />
+      <dfdl:defineVariable defaultValue=":"
+        name="CompositeSep" type="xsd:string" />
+      <dfdl:defineVariable defaultValue="?" name="EscapeChar"
+        type="xsd:string" />
+      <dfdl:defineVariable defaultValue="*" name="RepeatSep"
+        type="xsd:string" />
+      <dfdl:defineVariable defaultValue="." name="DecimalSep"
+        type="xsd:string" />
+      <dfdl:defineVariable defaultValue=","
+        name="GroupingSep" type="xsd:string" />
+
+      <dfdl:defineFormat name="EDIFormat">
+        <dfdl:format encoding="iso-8859-1" ignoreCase="yes"
+          byteOrder="bigEndian" representation="text"
+          textStringJustification="left" truncateSpecifiedLengthString="no"
+          decimalSigned="yes" textNumberCheckPolicy="lax"
+          textNumberJustification="right" textZonedSignStyle="asciiStandard"
+          textBooleanJustification="left" sequenceKind="ordered"
+          choiceLengthKind="implicit" separator="" separatorPolicy="suppressed"
+          separatorPosition="infix" initiator="" terminator=""
+          documentFinalTerminatorCanBeMissing="no" lengthUnits="characters"
+          lengthKind="delimited" textPadKind="none" textTrimKind="none"
+          textStringPadCharacter="%SP;" textNumberPadCharacter="%SP;"
+          textBooleanPadCharacter="%SP;" textStandardBase="10"
+          textStandardDecimalSeparator="{$tns:DecimalSep}"
+          textStandardGroupingSeparator="{$tns:GroupingSep}"
+          textStandardExponentRep="E" alignment="1" alignmentUnits="bytes"
+          leadingSkip="0" trailingSkip="0" fillByte="%#r00;"
+          initiatedContent="no" textNumberRep="standard"
+          textStandardZeroRep="" textNumberRoundingMode="roundUp"
+          nilValueDelimiterPolicy="none" emptyValueDelimiterPolicy="none"
+          escapeSchemeRef="tns:EDIEscapeScheme" textStandardInfinityRep="Inf"
+          textStandardNaNRep="NaN" textNumberRounding="pattern"
+          calendarPatternKind="implicit" calendarPattern="yyyy-MM-dd'T'HH:mm:ss"
+          calendarCheckPolicy="lax" calendarTimeZone="UTC"
+          calendarObserveDST="yes" calendarFirstDayOfWeek="Monday"
+          calendarDaysInFirstWeek="4" calendarCenturyStart="53"
+          calendarLanguage="en-US" textCalendarJustification="left"
+          textBooleanTrueRep="true" textBooleanFalseRep="false"
+          textCalendarPadCharacter="%SP;" occursCountKind="implicit"
+          outputNewLine="%CR;%LF;" binaryFloatRep="ieee" textBidi="no"
+          nilKind="literalValue" useNilForDefault="no" floating="no"
+          binaryNumberRep="binary">
+        </dfdl:format>
+      </dfdl:defineFormat>
+
+      <dfdl:defineEscapeScheme name="EDIEscapeScheme">
+        <dfdl:escapeScheme escapeKind="escapeCharacter"
+          escapeCharacter="{$tns:EscapeChar}" escapeEscapeCharacter="{$tns:EscapeChar}"
+          extraEscapedCharacters="+ : '" />
+      </dfdl:defineEscapeScheme>
+
+      <dfdl:defineFormat name="EDISegmentFormat">
+        <dfdl:format terminator="{$tns:SegmentTerm}"
+          emptyValueDelimiterPolicy="both" />
+      </dfdl:defineFormat>
+
+      <dfdl:defineFormat name="EDISegmentSequenceFormat">
+        <dfdl:format separator="{$tns:FieldSep}"
+          separatorPosition="prefix" separatorPolicy="suppressedAtEndLax"
+          terminator="" />
+      </dfdl:defineFormat>
+
+      <dfdl:defineFormat name="EDICompositeSequenceFormat">
+        <dfdl:format separator="{$tns:CompositeSep}"
+          separatorPosition="infix" separatorPolicy="suppressedAtEndLax"
+          terminator="" />
+      </dfdl:defineFormat>
+
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:annotation>
+    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+      <dfdl:format ref="tns:EDIFormat" />
+    </xsd:appinfo>
+  </xsd:annotation>
+
+  <xsd:element ibmSchExtn:docRoot="true" name="Message">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element dfdl:ref="tns:EDISegmentFormat"
+          dfdl:initiator="UNH" name="UNH">
+          <xsd:complexType>
+            <xsd:sequence dfdl:ref="tns:EDISegmentSequenceFormat">
+              <xsd:annotation>
+                <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                  <dfdl:discriminator test="{fn:true()}" />
+                </xsd:appinfo>
+              </xsd:annotation>
+              <xsd:element name="S009" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:choice>
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element ibmSchExtn:docRoot="true" name="ORDCHG">
+                <xsd:complexType>
+                  <xsd:annotation>
+                    <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                      <dfdl:assert>
+                        {fn:contains(../UNH/S009,'ORDCHG')}
+                      </dfdl:assert>
+                    </xsd:appinfo>
+                  </xsd:annotation>
+                  <xsd:sequence>
+                    <xsd:sequence dfdl:initiatedContent="yes">
+                      <xsd:element dfdl:ref="tns:EDISegmentFormat"
+                        dfdl:initiator="BGM" name="BGM">
+                        <xsd:complexType>
+                          <xsd:sequence dfdl:ref="tns:EDISegmentSequenceFormat">
+                            <xsd:element minOccurs="0" name="C002">
+                              <xsd:complexType>
+                                <xsd:sequence
+                                  dfdl:ref="tns:EDICompositeSequenceFormat">
+                                  <xsd:element minOccurs="0"
+                                    name="E1001" type="xsd:string" />
+                                </xsd:sequence>
+                              </xsd:complexType>
+                            </xsd:element>
+                          </xsd:sequence>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element ibmSchExtn:docRoot="true" name="ORDERS">
+                <xsd:annotation>
+                  <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                  </xsd:appinfo>
+                </xsd:annotation>
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:sequence dfdl:initiatedContent="yes">
+                      <xsd:element dfdl:ref="tns:EDISegmentFormat"
+                        dfdl:initiator="BGM" name="BGM">
+                        <xsd:complexType>
+                          <xsd:sequence dfdl:ref="tns:EDISegmentSequenceFormat">
+                            <xsd:element minOccurs="0" name="C002">
+                              <xsd:complexType>
+                                <xsd:sequence
+                                  dfdl:ref="tns:EDICompositeSequenceFormat">
+                                  <xsd:element minOccurs="0"
+                                    name="E1001" type="xsd:string" />
+                                </xsd:sequence>
+                              </xsd:complexType>
+                            </xsd:element>
+                          </xsd:sequence>
+                        </xsd:complexType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+
+              <xsd:sequence>
+                <xsd:annotation>
+                  <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:assert message="Unsupported message"
+                      test="{fn:false()}" />
+                  </xsd:appinfo>
+                </xsd:annotation>
+              </xsd:sequence>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:sequence>
+            <xsd:element ibmSchExtn:docRoot="true" name="BadMessage">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element dfdl:ref="tns:EDISegmentFormat"
+                    name="Segment" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="Name" type="xsd:string"
+                          dfdl:lengthKind="explicit" dfdl:length="3">
+                          <xsd:annotation>
+                            <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                              <dfdl:discriminator
+                                test="{. ne 'UNT' and . ne 'UIT'}" />
+                            </xsd:appinfo>
+                          </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="Data" type="xsd:hexBinary"
+                          dfdl:lengthUnits="bytes" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:choice>
+      </xsd:sequence>
+
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

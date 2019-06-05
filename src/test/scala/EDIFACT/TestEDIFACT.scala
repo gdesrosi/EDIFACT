@@ -50,7 +50,9 @@ class TestEDIFACT {
    * Compiling this schema also requires LOTS of memory on Daffodil.
    * E.g., java option -Xmx8G gives 8 gig which seems to work.
    */
-  @Test def test_edifact1() = { runner.runOneTest("edifact1") }
-  @Test def test_edifact2() = { runner.runOneTest("edifact2") }
+  //@Test def test_edifact1() = { runner.runOneTest("edifact1") }
+  //@Test def test_edifact2() = { runner.runOneTest("edifact2") }
+  //@Test def test_edifact2a() = { runner.runOneTest("edifact2a") }
+  @Test def test_edifact2b() = { runner.runOneTest("edifact2b") }
 
 }

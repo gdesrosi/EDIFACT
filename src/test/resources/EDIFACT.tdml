@@ -42,5 +42,28 @@
     </tdml:infoset>
   </tdml:parserTestCase>
   
+  <tdml:parserTestCase name="edifact2a" 
+    root="ORDERS" 
+    model="EDIFACT-SupplyChain-D03B/EDIFACT-SupplyChain-Messages-D.03B.xsd" 
+    description="EDIFACT test">
+    <tdml:document>
+      <tdml:documentPart type="file">EDIFACT-SupplyChain-D03B/TestData/SMALLEST_ORDERS_D.03B_Interchange.txt</tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset type="file">EDIFACT-SupplyChain-D03B/TestInfosets/SMALLEST_ORDERS_D.03B_Interchange.xml</tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+  
+  <tdml:parserTestCase name="edifact2b" 
+    root="Message" 
+    model="EDIFACT-SupplyChain-D03B/Test1.EDIFACT-SupplyChain-Messages-D.03B.xsd" 
+    description="EDIFACT test">
+    <tdml:document>
+      <tdml:documentPart type="file">EDIFACT-SupplyChain-D03B/TestData/SMALLEST_B_ORDERS_D.03B_Interchange.txt</tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset type="file">EDIFACT-SupplyChain-D03B/TestInfosets/SMALLEST_B_ORDERS_D.03B_Interchange.xml</tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
 </tdml:testSuite>
       

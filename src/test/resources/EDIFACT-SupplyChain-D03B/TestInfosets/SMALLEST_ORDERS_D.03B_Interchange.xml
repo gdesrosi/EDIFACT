@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ORDERS xmlns="http://www.ibm.com/dfdl/edi/un/edifact/SupplyChain/D03B" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <BGM xmlns="">
+            <C002>
+               <E1001 xsi:type="xs:string">220</E1001>
+            </C002>
+            <C106>
+               <E1004 xsi:type="xs:string">BKOD99</E1004>
+            </C106>
+            <E1225 xsi:type="xs:string">9</E1225>
+         </BGM>
+         <DTM xmlns="">
+            <C507>
+               <E2005 xsi:type="xs:string">137</E2005>
+               <E2380 xsi:type="xs:string">20051107</E2380>
+               <E2379 xsi:type="xs:string">102</E2379>
+            </C507>
+         </DTM>
+         <UNS xmlns="">
+            <E0081 xsi:type="xs:string">S</E0081>
+         </UNS>
+</ORDERS>
