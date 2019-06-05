@@ -111,14 +111,14 @@
           <xsd:sequence>
             <xsd:choice>
               <xsd:element ibmSchExtn:docRoot="true" name="ORDCHG">
+                <xsd:annotation>
+                  <xsd:appinfo source="http://www.ogf.org/dfdl/">
+                    <dfdl:assert>
+                      {fn:contains(../UNH/S009,'ORDCHG')}
+                    </dfdl:assert>
+                  </xsd:appinfo>
+                </xsd:annotation>
                 <xsd:complexType>
-                  <xsd:annotation>
-                    <xsd:appinfo source="http://www.ogf.org/dfdl/">
-                      <dfdl:assert>
-                        {fn:contains(../UNH/S009,'ORDCHG')}
-                      </dfdl:assert>
-                    </xsd:appinfo>
-                  </xsd:annotation>
                   <xsd:sequence>
                     <xsd:sequence dfdl:initiatedContent="yes">
                       <xsd:element dfdl:ref="tns:EDISegmentFormat"
